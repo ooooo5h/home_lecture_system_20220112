@@ -15,7 +15,9 @@ def created_app():
     # 기본 로그인
     @app.post("/user")
     def user_post():
-        return login(request.args.to_dict())
+        # args : 쿼리 파라미터에 들어있는 데이터들
+        # form : 폼데이터에 담겨있는 데이터들
+        return login(request.form.to_dict())
     
     @app.post("/lecture")
     def lecture_post():
