@@ -23,3 +23,14 @@ def login(params):
             'user' : Users(login_user).get_data_object()
         }
     }
+    
+def sign_up(params):
+    
+    sql = f"INSERT INTO users (email, password, name) VALUES ('{params['email']}','{params['pw']}','{params['name']}')"
+    
+    db.insertAndCommit(sql)
+    
+    return {
+        'code' : 200,
+        'message' : '회원가입 성공'
+    }
