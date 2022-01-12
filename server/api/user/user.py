@@ -5,17 +5,21 @@ from server.model.users import Users
 
 db = DBConnector()
 
-def test():
+def login(params):
+    sql = f"SELECT * FROM users WHERE email='{params['email']}' AND password='{params['pw']}'"
     
-    # DB의 모든 users 조회 쿼리를 날려보자
-    sql = "SELECT * FROM users"
-
-    all_list = db.executeAll(sql)
+    login_user = db.executeOne(sql)
     
-    # 목록 for문을 돌면서, 한 줄을 row로 추출하고, 추출된 row를 모델클래스로 가공해서 dict로 재가공해라를 한줄로 작성
-    # comprehension
-    all_users = [ Users(row).get_data_object()  for row in all_list]
+    if login_user == None:
+        return {
+            'code' : 400,
+            'message' : '이메일 또는 비밀번호 잘못'
+        }, 400
         
-    return{
-        'users' : all_users
+    return {
+        'code' : 200,
+        'message' : '로그인 성공',
+        'data' : {
+            'user' : Users(login_user).get_data_object()
+        }
     }

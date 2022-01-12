@@ -12,9 +12,10 @@ from .api.lecture import lecture_test
 def created_app():
     app = Flask(__name__)
     
-    @app.get("/test")
-    def api_test():
-        return test()
+    # 기본 로그인
+    @app.post("/user")
+    def user_post():
+        pass
     
     @app.post("/lecture")
     def lecture_post():
