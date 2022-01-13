@@ -93,12 +93,17 @@ def view_lecture_detail(id, params):
     
     
     # 3 : 해당 강의의 모든 리뷰 평균 점수를 추가로 조회
+    
+    sql = f"SELECT AVG(score) AS avg_score FROM lecture_review WHERE lecture_review.lecture_id = {id};"
 
-
+    avg_score_result = db.executeOne(sql)
+    
+    avg_score = round(avg_score_result['avg_score'], 2)
+    
     return{
         'code' : 200,
         'message' : '강의 상세 보기',
         'data' : {
-            'lecture' : lecture.get_data_object(reviews=review_list)
+            'lecture' : lecture.get_data_object(reviews=review_list, avg_score= avg_score)
         }
     }
