@@ -1,9 +1,7 @@
 # 로그인/회원가입 등, 사용자 정보 관련 기능 모아두는 모듈
 # DB 연결 정보를 보관하는 변수를 import 하자
-from server.db_connector import DBConnector
 from server.model.users import Users
-
-db = DBConnector()
+from server import db
 
 def login(params):
     sql = f"SELECT * FROM users WHERE email='{params['email']}' AND password='{params['pw']}'"
