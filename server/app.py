@@ -11,7 +11,7 @@ def created_app():
     
     # API 로직 함수/클래스들은  created_app 함수 내에서만 필요함
     from .api.user import login, sign_up, find_user_by_email
-    from .api.lecture import get_all_lectures, apply_lecture, cancel_apply, write_review
+    from .api.lecture import get_all_lectures, apply_lecture, cancel_apply, write_review, view_lecture_detail
     
     # 기본 로그인
     @app.post("/user")
@@ -36,6 +36,12 @@ def created_app():
     @app.get("/lecture")
     def lecture_get():
         return get_all_lectures(request.args.to_dict())
+    
+    # 특정 강의 상세보기
+    @app.get("/lecture/<lecture_id>")   # lecture/1 처럼, path방식의 주소를 쓸꺼야
+    def lecture_detail(lecture_id):
+        print(f"어떤 강의? {lecture_id}")
+        return view_lecture_detail()
     
     # 수강 신청
     @app.post("/lecture")

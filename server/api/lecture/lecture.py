@@ -72,3 +72,9 @@ def cancel_apply(params):
         'code' : 200,
         'message' : '수강 취소 완료'
     }
+    
+# 특정 강의 상세보기
+def view_lecture_detail():
+    return{
+        '임시' : '강의 상세 보기'
+    }
