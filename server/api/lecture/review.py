@@ -57,3 +57,9 @@ def write_review(params):
         'code' : 200,
         'message' : '리뷰 작성 완료'
     }
+    
+# 리뷰 수정하기
+def modify_review(params):
+    return{
+        '임시' : '리뷰 수정 기능'
+    }
