@@ -21,6 +21,17 @@ class Lectures:
         # 만약에 reviews 파라미터에 실제 데이터가 들어왔다면 따로 추가해주자
         if reviews:
             # dict에는 키를 새로 지정해서 새 변수를 추가하는 것도 가능
-            data['reviews'] = reviews        
+            data['reviews'] = reviews   
+            
+
+            # 모든 리뷰의 평점을 가지고 평균을 구해보자
+            sum_score = 0
+            
+            for review in reviews : 
+                sum_score += review['score'] 
+              
+            avg_score = sum_score / len(reviews)
+            
+            data['avg_scre'] = avg_score   
         
         return data
