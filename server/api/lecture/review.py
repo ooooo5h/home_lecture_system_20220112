@@ -83,8 +83,33 @@ def modify_review(params):
             'code' : 200,
             'message' : '제목 수정 완료'
         }
+     
+    # 내용 변경?
+    if column_name == 'content':
+        sql = f""
         
+        db.cursor.execute(sql)
+        db.db.commit()
         
+        return{
+            'code' : 200,
+            'message' : '내용 수정 완료'
+        }
+           
+    # 점수 변경?
+    if column_name == 'score':
+        sql = f""
+        
+        db.cursor.execute(sql)
+        db.db.commit()
+        
+        return{
+            'code' : 200,
+            'message' : '점수 수정 완료'
+        }
+   
+    # 여기까지 내려온거면, 수정할 수 있는 field가 아님(잘못된 값 입력했다!)     
     return{
-        '임시' : '리뷰 수정 기능'
-    }
+        'code' : 400,
+        'message' : 'field에 잘못된 값 입력했다',
+    }, 400
