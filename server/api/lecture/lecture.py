@@ -1,9 +1,20 @@
 from server.model import Lectures
 from server import db
 
-# 모든 강의 목록 내려오기(당장은 params 활용 x)
+# 모든 강의 목록 <이름순으로> 내려오기(당장은 params 활용 x)
 def get_all_lectures(params):
+    
+    sql = f"SELECT * FROM lectures ORDER BY name"
+    
+    lecture_list = db.executeAll(sql)
+    
+    lectures = [Lectures(row).get_data_object() for row in lecture_list]
+    
     return{
-        '임시' : '강의 목록 가져오기'
+        'code' : 200,
+        'message' : '모든 강의 내려오기',
+        'data' : {
+            'lectures' : lectures,
+        }
     }
 
