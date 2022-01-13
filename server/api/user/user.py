@@ -46,3 +46,9 @@ def sign_up(params):
         'code' : 200,
         'message' : '회원가입 성공'
     }
+    
+# 이메일 받아서 사용자 정보 조회
+def find_user_by_email(params):
+    return{
+        '임시' : '이메일로 사용자 정보 조회'
+    }
