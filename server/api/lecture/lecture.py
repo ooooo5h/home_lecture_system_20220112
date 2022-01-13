@@ -18,3 +18,9 @@ def get_all_lectures(params):
         }
     }
 
+
+# 수강 신청 기능
+def apply_lecture(params):
+    return {
+        '임시' : '수강신청 기능'
+    }
