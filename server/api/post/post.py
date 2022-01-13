@@ -37,8 +37,14 @@ def view_post(post_id, params):
     
 # 게시글 등록
 def add_post(params):
+    
+    sql = f"INSERT INTO posts (user_id, title, content) VALUES ({params['user_id']}, '{params['title']}', '{params['content']}')"
+    
+    db.insertAndCommit(sql)
+    
     return{
-        '임시' : '게시글 등록'
+        'code' : 200,
+        'message' : '게시글 등록 완료'
     }
     
     
