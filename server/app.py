@@ -1,4 +1,5 @@
 # 플라스크 자체를 로딩하자
+import re
 from flask import Flask, request
 
 from server.db_connector import DBConnector
@@ -12,6 +13,7 @@ def created_app():
     # API 로직 함수/클래스들은  created_app 함수 내에서만 필요함
     from .api.user import login, sign_up, find_user_by_email
     from .api.lecture import get_all_lectures, apply_lecture, cancel_apply, write_review, view_lecture_detail, modify_review
+    from .api.post import get_all_posts, add_post, view_post, delete_post, modify_post
     
     # 기본 로그인
     @app.post("/user")
@@ -63,13 +65,28 @@ def created_app():
         return modify_review(request.form.to_dict())
     
     # 모든 게시글 조회
+    @app.get("/post")
+    def post_get():
+        return get_all_posts(request.args.to_dict())
     
     # 특정 게시글 상세 조회(게시글 하나만 리턴 - 향후 댓글 목록 하위 데이터로)
+    @app.get("/post/<post_id>")
+    def post_get_detail(post_id):
+        return view_post(post_id, request.args.to_dict())
     
     # 게시글 등록
+    @app.post("/post")
+    def post_post():
+        return add_post(request.form.to_dict())
     
     # 게시글 수정
+    @app.put("/post")
+    def post_put():
+        return modify_post(request.form.to_dict())
     
     # 게시글 삭제
+    @app.delete("/post")
+    def post_delete():
+        return delete_post(request.args.to_dict())
     
     return app
