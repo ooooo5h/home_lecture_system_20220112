@@ -51,7 +51,7 @@ def write_review(params):
     # 리뷰 실제 등록
     sql = f"INSERT INTO lecture_review (lecture_id, user_id, title, content, score) VALUES ({params['lecture_id']}, {params['user_id']}, '{params['title']}', '{params['content']}',{params['score']})"
     
-    db.insertAndCommit(sql)
+    db.executeQueryAndCommit(sql)
     
     return{
         'code' : 200,
