@@ -26,6 +26,18 @@ def login(params):
     
 def sign_up(params):
     
+    # 이메일이 중복이면 가입 불허
+    sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
+    
+    email_check_result = db.executeOne(sql)
+    
+    if email_check_result:
+        return {
+            'code' : 400,
+            'message' : '중복된 이메일입니다.'
+        }, 400
+    
+    
     sql = f"INSERT INTO users (email, password, name) VALUES ('{params['email']}','{params['pw']}','{params['name']}')"
     
     db.insertAndCommit(sql)
