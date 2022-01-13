@@ -50,8 +50,17 @@ def add_post(params):
     
 # 게시글 수정
 def modify_post(params):
+    
+    # 파라미터 사전 검증
+    # 실존하는 글인가 ? 내가 쓴 글이 맞는가? 제목/내용이 비어있나? 입력 문구가 최소 1자 이상인가?
+    
+    sql = f"UPDATE posts SET title='{params['title']}', content = '{params['content']}' WHERE id = {params['post_id']} "
+    
+    db.executeQueryAndCommit(sql)
+    
     return{
-        '임시' : '게시글 수정'    
+        'code' : 200,
+        'message' : '게시글 수정'    
     }
     
     
