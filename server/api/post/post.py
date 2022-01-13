@@ -68,7 +68,21 @@ def modify_post(params):
 def delete_post(params):
     
     # 파라미터 검증 -> 본인이 쓴 글이 맞는가? + 지우려는 글이 실존하나?
-
+    sql = f"SELECT * FROM posts WHERE id = {params['post_id']}"
+    
+    post_data = db.executeOne(sql)
+    
+    if post_data == None:
+        return{
+            'code' : 400,
+            'message' : '해당 게시글은 존재하지 않음'
+        }, 400
+   
+    if post_data['user_id'] != int(params['user_id']):
+        return{
+            'code' : 400,
+            'message' : '본인이 작성한 게시글만 삭제할 수 있습니다.'
+        }, 400
     
     sql = f"DELETE FROM posts WHERE id = {params['post_id']}"
     
