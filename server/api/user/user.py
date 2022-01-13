@@ -49,6 +49,22 @@ def sign_up(params):
     
 # 이메일 받아서 사용자 정보 조회
 def find_user_by_email(params):
-    return{
-        '임시' : '이메일로 사용자 정보 조회'
-    }
+    
+    sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
+    
+    find_user_data = db.executeOne(sql)
+    
+    if find_user_data :
+        find_user = Users(find_user_data)
+        return {
+            'code' : 200,
+            'message' : '사용자를 찾았다',
+            'data' : {
+                'user' : find_user.get_data_object()
+            }
+        }
+    else :
+        return {
+            'code' : 400,
+            'messsage' : '해당 이메일의 사용자 없음',            
+        }, 400
