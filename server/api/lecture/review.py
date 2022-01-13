@@ -71,6 +71,27 @@ def modify_review(params):
     column_name = params['field']
     
     
+    # 변경쿼리날리기전에 검증을 하자
+    # 0 : 받아온 리뷰 아이디에 해당하는 리뷰가 실존하나?
+    sql = f"SELECT * FROM lecture_review WHERE id = {params['review_id']}"
+    
+    review_data = db.executeOne(sql)
+    
+    if review_data == None:
+        return {
+            'code' : 400,
+            'message' : '해당 리뷰 존재하지 않습니다.'
+        }, 400
+      
+    # 1 : 수정하려는 리뷰가 본인이 작성한게 맞나?
+    # 파라미터에서 가져온 user_id(파라미터에서 가져온 모든 데이터는 일단 str)
+    if int(review_data['user_id']) != int(params['user_id']):
+        return{
+            'code' : 400,
+            'message' : '본인 작성 리뷰만 수정 가능'
+        }, 400
+      
+    
     # 제목 변경?
     if column_name == 'title':
         sql = f"UPDATE lecture_review SET title='{params['value']}' WHERE id = {params['review_id']} "
@@ -98,7 +119,18 @@ def modify_review(params):
            
     # 점수 변경?
     if column_name == 'score':
-        sql = f"UPDATE lecture_review SET score = {params['value']} WHERE id = {params['review_id']}"
+        
+        # 2 : 파라미터로 들어온 점수가 1~5인가?
+        score = float(params['value'])
+        
+        if not (1<= score <= 5) :
+            return{
+                'code' : 400,
+                'message' : '리뷰 범위는 1 ~ 5 만 입력하세요.'
+            }, 400
+       
+        
+        sql = f"UPDATE lecture_review SET score = {score} WHERE id = {params['review_id']}"
         
         db.cursor.execute(sql)
         db.db.commit()
